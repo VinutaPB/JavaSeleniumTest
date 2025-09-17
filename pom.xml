@@ -2,6 +2,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
   <artifactId>selenium-cucumber-testng</artifactId>
@@ -47,7 +48,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- WebDriverManager (auto driver binaries) -->
+    <!-- WebDriverManager -->
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
@@ -67,16 +68,29 @@
         </configuration>
       </plugin>
 
-      <!-- Surefire to run TestNG tests -->
+      <!-- Surefire Plugin for TestNG & Cucumber -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire.version}</version>
         <configuration>
-          <!-- run classes matching *Test.java -->
           <includes>
             <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+            <include>**/*Runner.java</include>
           </includes>
+          <testFailureIgnore>false</testFailureIgnore>
+        </configuration>
+      </plugin>
+
+      <!-- Allure Plugin -->
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.12.0</version>
+        <configuration>
+          <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+          <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
         </configuration>
       </plugin>
     </plugins>
